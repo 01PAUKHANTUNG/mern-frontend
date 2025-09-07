@@ -6,12 +6,22 @@ import cart from '../assets/cart.png'
 import { useNavigate } from 'react-router';
 import { toast } from 'react-toastify';
 import Login from './Login';
+import Payment from './Payment.jsx';
 
 const OrderForm = () => {
 
    const {currency,TotalAmount, getCartCount, token} = useContext(ZfuContext);
    const [visible, setVisible] = useState('kpay');
    const navigate = useNavigate();
+   const [showPayment, setPayment] = useState(false);
+
+   const[name, setName] = useState()
+   const[email, setEmail] = useState()
+   const[zipcode, setZipcode] = useState()
+   const[address, setAddress] = useState()
+   const[phone, setPhone] = useState()
+   const[country, setCountry] = useState()
+   
 
    const back = ()=>{
       navigate(-1)
@@ -19,10 +29,14 @@ const OrderForm = () => {
 
    const submithandle = (e)=>{
       e.preventDefault();
+      
       if(getCartCount() === 0){
          toast.error("cart is empty")
          return  null;     
-      }   
+      }  else{ 
+        
+        setPayment(true)
+      }
    }
 
    if(!token){
@@ -46,7 +60,7 @@ const OrderForm = () => {
             <div>
                <img onClick={back} className='w-[30px] cursor-pointer py-4 ml-4' src={backImage} alt='' />
             </div>
-        <form onSubmit={submithandle}>
+       {showPayment === false ?  <form onSubmit={submithandle}>
         <div className=' py-4 w-[80%] mx-auto mb-6'>
           <div className='flex flex-col md:flex-row'>
              <div className='w-[100%]  md:w-[60%]'>
@@ -54,31 +68,31 @@ const OrderForm = () => {
               <div className='flex flex-col sm:flex-row gap-3'>
                  <label htmlFor='name' className='w-[100%] flex flex-col gap-1'>
                     Name
-                    <input className=' py-2 px-2 outline-none border-2 border-gray-600' type='text' id='name' placeholder='Name' required />
+                    <input onChange={(e)=>setName(e.target.value)} className=' py-2 px-2 outline-none border-2 border-gray-600' type='text' id='name' placeholder='Name' required />
                  </label>
                  <label htmlFor='email' className='w-[100%] flex flex-col gap-1'>
                     Email
-                    <input className=' py-2 px-2 outline-none border-2 border-gray-600' type='email' id='email' placeholder='Email' required />
+                    <input onChange={(e)=>setEmail(e.target.value)} className=' py-2 px-2 outline-none border-2 border-gray-600' type='email' id='email' placeholder='Email' required />
                  </label>
               </div>
                <div className='flex flex-col sm:flex-row gap-3'>
                  <label htmlFor='text' className='w-[100%] flex flex-col gap-1'>
                     Address
-                    <input className=' py-2 px-2 outline-none border-2 border-gray-600' type='text' id='address' placeholder='Address' required />
+                    <input onChange={(e)=>setAddress(e.target.value)} className=' py-2 px-2 outline-none border-2 border-gray-600' type='text' id='address' placeholder='Address' required />
                  </label>
                  <label htmlFor='phone' className='w-[100%] flex flex-col gap-1'>
                     Phone 
-                    <input className=' py-2 px-2 outline-none border-2 border-gray-600' type='number' id='phone' placeholder='Phone'  required />
+                    <input onChange={(e)=>setPhone(e.target.value)} className=' py-2 px-2 outline-none border-2 border-gray-600' type='number' id='phone' placeholder='Phone'  required />
                  </label>
               </div>
                   <div className='flex flex-col sm:flex-row gap-3'>
                  <label htmlFor='code' className='w-[100%] flex flex-col gap-1'>
                     Zip Code
-                    <input className=' py-2 px-2 outline-none border-2 border-gray-600' type='number' id='code' placeholder='Code' required />
+                    <input onChange={(e)=>setZipcode(e.target.value)} className=' py-2 px-2 outline-none border-2 border-gray-600' type='number' id='code' placeholder='Code' required />
                  </label>
                  <label htmlFor='country' className='w-[100%] flex flex-col gap-1'>
                     Country
-                    <input className=' py-2 px-2 outline-none border-2 border-gray-600' type='text' id='country' placeholder='Country' required />
+                    <input onChange={(e)=>setCountry(e.target.value)} className=' py-2 px-2 outline-none border-2 border-gray-600' type='text' id='country' placeholder='Country' required />
                  </label>
               </div>
 
@@ -120,6 +134,8 @@ const OrderForm = () => {
            </div>
           </div>
         </form>
+        : <Payment name={name} email={email} address={address} zipcode={zipcode} country={country} phone={phone}/>
+        }
     </div>
   )
 }

@@ -37,9 +37,6 @@ useEffect(()=>{
  
 },[cartItem])
 
-useEffect(()=>{
-  console.log(cartData)
-},[cartData])
 
 if(!token){
   return <Login />

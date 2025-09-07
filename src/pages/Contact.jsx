@@ -28,7 +28,10 @@ const Contact = () => {
          </div>
 
          <div >
-           <form className='flex flex-col sm:flex-row py-8 '>
+           <form 
+           action="https://formspree.io/f/xgvlwdjn"
+           method='POST'
+           className='flex flex-col sm:flex-row py-8 '>
              <motion.div
                initial={{ opacity: 0, y: 200 }}
             animate={{ opacity: 1, y: 0 }}
@@ -80,23 +83,24 @@ const Contact = () => {
                   <div className='flex flex-col gap-4 w-[80%] mx-auto mt-1 sm:mt-12'>
                       <label htmlFor='name' className='flex flex-col' >
                          Name
-                         <input type='text' id='name' alt='' className='py-3 px-2' required/>
+                         <input type='text' id='name' name='name' alt='' className='py-3 px-2' required/>
                       </label>
                       <label htmlFor='email' className='flex flex-col' >
                          Email
-                         <input type='email' id='email' alt='' className='py-3 px-2' required/>
+                         <input type='email' id='email' name='email' alt='' className='py-3 px-2' required/>
                       </label>
                       <label htmlFor='subject' className='flex flex-col' >
                          Subject
-                         <input type='text' id='subject' alt='' className='py-3 px-2' required/>
+                         <input type='text' id='subject' name='subject' alt='' className='py-3 px-2' required/>
                       </label>
                       <label htmlFor='message' className='flex flex-col' >
                          Message
-                         <textarea id='message' className='px-2 py-3'required/>
+                         <textarea id='message' name='message' className='px-2 py-3'required/>
                       </label>
                       <button type='submit' className='bg-slate-700 py-3 px-3 text-white rounded-md font-bold hover:text-yellow-100 hover:bg-slate-900'> KHAK </button>
                   </div>
-                  </div>
+                  </div> {/* Optional redirect after submit */}
+      <input type="hidden" name="_next" value="https://your-site.com/thanks" />
               </motion.div>
            </form>
          </div>
